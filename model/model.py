@@ -12,7 +12,7 @@ class Model:
     def buildGraph(self):
         self._grafo.clear()
         self._grafo.add_nodes_from(self._fermate)
-        #self.addedges() (corretto ma troppo lento!!)
+        #self.addedges() (corretto ma troppo lento!!) ma buono se il grafo che devo costruire è piccolo!
         #self.addedge2() (molto buono)
         self.addedge3() #(IL MIGLIORE!)
 
@@ -35,6 +35,33 @@ class Model:
             u = self._idMapFermate[conn.id_stazP]
             v = self._idMapFermate[conn.id_stazA]
             self._grafo.add_edge(u, v)
+
+    def getBFSNodesFromEdges(self, source):
+        archi = nx.bfs_edges(self._grafo, source)
+        nodiBFS = []
+        for u, v in archi:
+            nodiBFS.append(v)
+        return nodiBFS
+
+    def getDFSNodesFromEdges(self, source):
+        archi = nx.dfs_edges(self._grafo, source)
+        nodiDFS = []
+        for u, v in archi:
+            nodiDFS.append(v)
+        return nodiDFS
+
+    def getBSFNodesFromTree(self, source):
+        tree = nx.bfs_tree(self._grafo, source)
+        archi = list(tree.edges())
+        nodi = list(tree.nodes())
+        return nodi[1:]
+
+    def getDFSNodesFromTree(self, source):
+        tree = nx.dfs_tree(self._grafo, source)
+        archi = list(tree.edges())
+        nodi = list(tree.nodes())
+        return nodi[1:]
+
 
 
 

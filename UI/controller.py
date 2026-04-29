@@ -7,12 +7,35 @@ class Controller:
         self._view = view
         # the model, which implements the logic of the program and holds the data
         self._model = model
+        self._fermataPartenza = None
+        self._fermataArrivo = None
 
     def handleCreaGrafo(self,e):
-        pass
+        self._model.buildGraph()
+        self._view.lst_result.controls.clear()
+        self._view.lst_result.controls.append(ft.Text("Grafo correttamente creato"))
+        self._view.lst_result.controls.append(ft.Text(f"Il grafo è costituito da {self._model.get_numnodi()} nodi.\nIl grafo è costituio da {self._model.get_numarchi()} archi"))
+        self._view.update_page()
 
     def handleCercaRaggiungibili(self,e):
-        pass
+        self._view.lst_result.controls.clear()
+        if self._fermataPartenza is None:
+            self._view.lst_result.controls.append(
+                ft.Text("Attenzione, non è stata fatta una scelta di partenza!", color="red", weight="bold"))
+            self._view.update_page()
+            return
+        if self._model.get_numnodi() == 0:
+            self._view.lst_result.controls.append(ft.Text("Grafo non ancora creato!", color="red", weight="bold"))
+            self._view.update_page()
+            return
+        nodes = self._model.getDFSNodesFromEdges(self._fermataPartenza)
+        self._view.lst_result.controls.append(
+            ft.Text(f"Di seguito i nodi raggiungibili da {self._fermataPartenza}:",weight="bold"))
+        for n in nodes:
+            self._view.lst_result.controls.append(ft.Text(f"{n}"))
+
+        self._view.update_page()
+        return
 
     def loadFermate(self, dd: ft.Dropdown()):
         fermate = self._model.fermate
@@ -34,6 +57,7 @@ class Controller:
             self._fermataPartenza = None
         else:
             self._fermataPartenza = e.control.data
+        print(self._fermataPartenza)
 
     def read_DD_Arrivo(self,e):
         print("read_DD_Arrivo called ")
@@ -41,3 +65,4 @@ class Controller:
             self._fermataArrivo = None
         else:
             self._fermataArrivo = e.control.data
+        print(self._fermataArrivo)
