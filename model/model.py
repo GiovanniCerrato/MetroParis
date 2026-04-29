@@ -50,12 +50,11 @@ class Model:
             nodiDFS.append(v)
         return nodiDFS
 
-    def getBSFNodesFromTree(self, source):
+    def getBFSNodesFromTree(self, source):
         tree = nx.bfs_tree(self._grafo, source)
         archi = list(tree.edges())
         nodi = list(tree.nodes())
         return nodi[1:]
-
     def getDFSNodesFromTree(self, source):
         tree = nx.dfs_tree(self._grafo, source)
         archi = list(tree.edges())

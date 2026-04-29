@@ -25,3 +25,10 @@ nodiDFS = m.getDFSNodesFromEdges(source)
 print(len(nodiDFS))
 for i in range (10):
     print(nodiDFS[i])
+
+print(*(n for n in m.getDFSNodesFromTree(source)))
+print(*(n for n in m.getBFSNodesFromTree(source)))
+
+print(len(m.getBFSNodesFromTree(source)))
+print(len(m.getDFSNodesFromTree(source)))
+
