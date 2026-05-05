@@ -30,7 +30,7 @@ class Controller:
             return
         nodes = self._model.getDFSNodesFromEdges(self._fermataPartenza)
         self._view.lst_result.controls.append(
-            ft.Text(f"Di seguito i nodi raggiungibili da {self._fermataPartenza}:",weight="bold"))
+            ft.Text(f"Di seguito i {len(nodes)} nodi raggiungibili da {self._fermataPartenza}:",weight="bold"))
         for n in nodes:
             self._view.lst_result.controls.append(ft.Text(f"{n}"))
 
